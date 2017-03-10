@@ -45,7 +45,10 @@ namespace Phoneword_iOS
 
 			CallButton.TouchUpInside += (object sender, EventArgs e) =>
 			{
-				PhoneNumbers.Add(translatedNumber);
+				if (translatedNumber.Length > 0)
+				{
+					PhoneNumbers.Add(translatedNumber);
+				}
 
 				var url = new NSUrl("tel:" + translatedNumber);
 				//...otherwise show an alert dialog. 
