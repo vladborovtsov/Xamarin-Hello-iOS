@@ -60,24 +60,34 @@ namespace Phoneword_iOS
 				}
 
 			};
-		}
 
-		public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
-		{
-			base.PrepareForSegue(segue, sender);
-
-			// set the View Controller that’s powering the screen we’re
-			// transitioning to
-			var callHistoryController = segue.DestinationViewController as CallHistoryController;
-
-			//set the Table View Controller’s list of phone numbers to the
-			// list of dialed phone numbers
-			if (callHistoryController != null)
+			CallHistoryButton.TouchUpInside += (object sender, EventArgs e) =>
 			{
-				callHistoryController.PhoneNumbers = PhoneNumbers;
-			}
-
+				CallHistoryController callHistoryCtrl = this.Storyboard.InstantiateViewController("CallHistoryController") as CallHistoryController;
+				if (callHistoryCtrl != null)
+				{
+					callHistoryCtrl.PhoneNumbers = PhoneNumbers;
+					this.NavigationController.PushViewController(callHistoryCtrl, true);
+				}
+			};
 		}
+
+		//public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+		//{
+		//	base.PrepareForSegue(segue, sender);
+
+		//	// set the View Controller that’s powering the screen we’re
+		//	// transitioning to
+		//	var callHistoryController = segue.DestinationViewController as CallHistoryController;
+
+		//	//set the Table View Controller’s list of phone numbers to the
+		//	// list of dialed phone numbers
+		//	if (callHistoryController != null)
+		//	{
+		//		callHistoryController.PhoneNumbers = PhoneNumbers;
+		//	}
+
+		//}
 
 		public override void DidReceiveMemoryWarning()
 		{

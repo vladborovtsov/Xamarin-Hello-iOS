@@ -103,7 +103,7 @@
         </scene>
         <scene sceneID="81">
             <objects>
-                <tableViewController id="82" sceneMemberID="viewController" customClass="CallHistoryController" title="Call History">
+                <tableViewController id="82" sceneMemberID="viewController" customClass="CallHistoryController" title="Call History" hasRefreshControl="0" storyboardIdentifier="CallHistoryController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="83">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
