@@ -4,13 +4,20 @@ using UIKit;
 
 using Foundation;
 
+using System.Collections.Generic; 
+
+
 namespace Phoneword_iOS
 {
 	public partial class ViewController : UIViewController
 	{
+		public List<string> PhoneNumbers { get; set; }
+		string translatedNumber = "";
+
 		protected ViewController(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
+			this.PhoneNumbers = new List<string>();
 		}
 
 		public override void ViewDidLoad()
@@ -18,7 +25,7 @@ namespace Phoneword_iOS
 			base.ViewDidLoad();
 			// Perform any additional setup after loading the view, typically from a nib.
 
-			string translatedNumber = "";
+
 			TranslateButton.TouchUpInside += (object sender, EventArgs e) =>
 			{
 				translatedNumber = PhoneTranslator.ToNumber(PhoneNumberText.Text);
@@ -38,6 +45,8 @@ namespace Phoneword_iOS
 
 			CallButton.TouchUpInside += (object sender, EventArgs e) =>
 			{
+				PhoneNumbers.Add(translatedNumber);
+
 				var url = new NSUrl("tel:" + translatedNumber);
 				//...otherwise show an alert dialog. 
 				if (!UIApplication.SharedApplication.OpenUrl(url))
@@ -48,6 +57,23 @@ namespace Phoneword_iOS
 				}
 
 			};
+		}
+
+		public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+		{
+			base.PrepareForSegue(segue, sender);
+
+			// set the View Controller that’s powering the screen we’re
+			// transitioning to
+			var callHistoryController = segue.DestinationViewController as CallHistoryController;
+
+			//set the Table View Controller’s list of phone numbers to the
+			// list of dialed phone numbers
+			if (callHistoryController != null)
+			{
+				callHistoryController.PhoneNumbers = PhoneNumbers;
+			}
+
 		}
 
 		public override void DidReceiveMemoryWarning()
